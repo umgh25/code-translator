@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC } from 'react';
 
 interface Props {
   language: string;
@@ -34,13 +34,12 @@ const languages = [
   { value: 'Python', label: 'Python' },
   { value: 'TSX', label: 'TSX' },
   { value: 'JSX', label: 'JSX' },
-  { value: 'Vue', label: 'Vue' },
   { value: 'Go', label: 'Go' },
   { value: 'C', label: 'C' },
   { value: 'C++', label: 'C++' },
   { value: 'Java', label: 'Java' },
   { value: 'C#', label: 'C#' },
-  { value: 'Visual Basic .NET', label: 'Visual Basic .NET' },
+  { value: ' Visual Basic .NET', label: ' Visual Basic .NET' },
   { value: 'SQL', label: 'SQL' },
   { value: 'Assembly Language', label: 'Assembly Language' },
   { value: 'PHP', label: 'PHP' },
@@ -66,8 +65,8 @@ const languages = [
   { value: 'Bash', label: 'Bash' },
   { value: 'Powershell', label: 'Powershell' },
   { value: 'PL/SQL', label: 'PL/SQL' },
-  { value: 'CSS', label: 'CSS' },
-  { value: 'Racket', label: 'Racket' },
+  { value: 'CSS', label: 'Racket' },
   { value: 'HTML', label: 'HTML' },
   { value: 'NoSQL', label: 'NoSQL' },
+  { value: 'Natural Language', label: 'Natural Language' },
 ];
