@@ -138,54 +138,50 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex h-full min-h-screen flex-col items-center bg-gradient-to-br from-[#1E293B] via-[#334155] to-[#0E1117] px-4 pb-20 text-neutral-200 sm:px-10">
-        <div className="mt-10 flex flex-col items-center justify-center sm:mt-16">
-          <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-600">
-            AI Code Translator
-          </h1>
-          <p className="mt-4 text-center text-sm text-neutral-400">
-            Effortlessly translate code between languages using AI.
-          </p>
+      <div className="flex h-full min-h-screen flex-col items-center bg-[#0E1117] px-4 pb-20 text-neutral-200 sm:px-10">
+        <div className="mt-10 flex flex-col items-center justify-center sm:mt-20">
+          <div className="text-4xl font-bold">AI Code Translator</div>
         </div>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center text-sm">
           <APIKeyInput apiKey={apiKey} onChange={handleApiKeyChange} />
         </div>
 
-        <div className="mt-4 flex items-center space-x-4">
+        <div className="mt-2 flex items-center space-x-2">
           <ModelSelect model={model} onChange={(value) => setModel(value)} />
+
           <button
-            className="w-[140px] cursor-pointer rounded-md bg-gradient-to-r from-violet-500 to-indigo-600 px-4 py-2 font-bold text-white shadow-lg transition duration-200 hover:shadow-xl hover:from-violet-600 hover:to-indigo-700 active:scale-95"
+            className="w-[140px] cursor-pointer rounded-md bg-violet-500 px-4 py-2 font-bold hover:bg-violet-600 active:bg-violet-700"
             onClick={() => handleTranslate()}
             disabled={loading}
           >
-            {loading ? "Translating..." : "Translate"}
+            {loading ? 'Translating...' : 'Translate'}
           </button>
         </div>
 
-        <div className="mt-2 text-center text-xs text-neutral-400">
+        <div className="mt-2 text-center text-xs">
           {loading
-            ? "Translating..."
+            ? 'Translating...'
             : hasTranslated
-            ? "Output copied to clipboard!"
-            : "Enter some code and click 'Translate'"}
+            ? 'Output copied to clipboard!'
+            : 'Enter some code and click "Translate"'}
         </div>
 
-        <div className="mt-10 grid w-full max-w-6xl gap-8 sm:grid-cols-2">
-          <div className="rounded-lg bg-[#1E293B] p-6 shadow-md">
-            <h2 className="mb-4 text-center text-xl font-bold text-neutral-100">
-              Input
-            </h2>
+        <div className="mt-6 flex w-full max-w-[1200px] flex-col justify-between sm:flex-row sm:space-x-4">
+          <div className="h-100 flex flex-col justify-center space-y-2 sm:w-2/4">
+            <div className="text-center text-xl font-bold">Input</div>
+
             <LanguageSelect
               language={inputLanguage}
               onChange={(value) => {
                 setInputLanguage(value);
                 setHasTranslated(false);
-                setInputCode("");
-                setOutputCode("");
+                setInputCode('');
+                setOutputCode('');
               }}
             />
-            {inputLanguage === "Natural Language" ? (
+
+            {inputLanguage === 'Natural Language' ? (
               <TextBlock
                 text={inputCode}
                 editable={!loading}
@@ -205,19 +201,18 @@ export default function Home() {
               />
             )}
           </div>
+          <div className="mt-8 flex h-full flex-col justify-center space-y-2 sm:mt-0 sm:w-2/4">
+            <div className="text-center text-xl font-bold">Output</div>
 
-          <div className="rounded-lg bg-[#1E293B] p-6 shadow-md">
-            <h2 className="mb-4 text-center text-xl font-bold text-neutral-100">
-              Output
-            </h2>
             <LanguageSelect
               language={outputLanguage}
               onChange={(value) => {
                 setOutputLanguage(value);
-                setOutputCode("");
+                setOutputCode('');
               }}
             />
-            {outputLanguage === "Natural Language" ? (
+
+            {outputLanguage === 'Natural Language' ? (
               <TextBlock text={outputCode} />
             ) : (
               <CodeBlock code={outputCode} />
