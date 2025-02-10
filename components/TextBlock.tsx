@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 interface Props {
   text: string;
   editable?: boolean;
@@ -5,7 +7,7 @@ interface Props {
   className?: string;
 }
 
-export const TextBlock: React.FC<Props> = ({
+export const TextBlock: FC<Props> = ({
   text,
   editable = false,
   onChange = () => {},
