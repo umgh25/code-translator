@@ -3,22 +3,24 @@ import { FC } from 'react';
 
 interface Props {
   model: OpenAIModel;
-  onChange: (model: OpenAIModel) => void;
+  onChange: (value: OpenAIModel) => void;
+  className?: string;
 }
 
-export const ModelSelect: FC<Props> = ({ model, onChange }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value as OpenAIModel);
-  };
+export const ModelSelect: FC<Props> = ({ model, onChange, className = '' }) => {
+  const models: OpenAIModel[] = ['gpt-3.5-turbo', 'gpt-4'];
 
   return (
     <select
-      className="h-[40px] w-[140px] rounded-md bg-[#1F2937] px-4 py-2 text-neutral-200"
       value={model}
-      onChange={handleChange}
+      onChange={(e) => onChange(e.target.value as OpenAIModel)}
+      className={`${className}`}
     >
-      <option value="gpt-3.5-turbo">GPT-3.5</option>
-      <option value="gpt-4">GPT-4</option>
+      {models.map((model) => (
+        <option key={model} value={model}>
+          {model}
+        </option>
+      ))}
     </select>
   );
 };
