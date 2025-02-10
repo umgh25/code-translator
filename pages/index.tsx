@@ -138,28 +138,52 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex h-full min-h-screen flex-col items-center bg-[#0E1117] px-4 pb-20 text-neutral-200 sm:px-10">
-        <div className="mt-10 flex flex-col items-center justify-center sm:mt-20">
-          <div className="text-4xl font-bold">AI Code Translator</div>
+      <div className="flex h-screen flex-col items-center bg-[#0E1117] px-4 py-6 text-neutral-200">
+        <div className="mt-4 flex flex-col items-center justify-center sm:mt-6">
+          <h1 className="bg-gradient-to-r from-violet-400 to-violet-600 bg-clip-text text-4xl font-bold text-transparent">
+            AI Code Translator
+          </h1>
+          <p className="mt-3 text-base text-gray-400">
+            Translate code between programming languages instantly
+          </p>
         </div>
 
-        <div className="mt-6 text-center text-sm">
-          <APIKeyInput apiKey={apiKey} onChange={handleApiKeyChange} />
+        <div className="mt-6 flex w-full max-w-xl justify-center">
+          <div className="w-full text-center">
+            <APIKeyInput 
+              apiKey={apiKey} 
+              onChange={handleApiKeyChange}
+              className="w-full max-w-md mx-auto"
+            />
+          </div>
         </div>
 
-        <div className="mt-2 flex items-center space-x-2">
-          <ModelSelect model={model} onChange={(value) => setModel(value)} />
-
+        <div className="mt-6 flex flex-col items-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+          <ModelSelect 
+            model={model} 
+            onChange={(value) => setModel(value)}
+            className="w-48 rounded-lg border border-gray-700 bg-[#1F2937] p-2"
+          />
           <button
-            className="w-[140px] cursor-pointer rounded-md bg-violet-500 px-4 py-2 font-bold hover:bg-violet-600 active:bg-violet-700"
+            className="w-48 rounded-lg bg-violet-500 px-4 py-2 font-medium text-white transition-all hover:bg-violet-600 active:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => handleTranslate()}
             disabled={loading}
           >
-            {loading ? 'Translating...' : 'Translate'}
+            {loading ? (
+              <span className="flex items-center justify-center">
+                <svg className="mr-2 h-5 w-5 animate-spin" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                Translating...
+              </span>
+            ) : (
+              'Translate'
+            )}
           </button>
         </div>
 
-        <div className="mt-2 text-center text-xs">
+        <div className="mt-4 text-sm text-gray-400">
           {loading
             ? 'Translating...'
             : hasTranslated
@@ -167,56 +191,71 @@ export default function Home() {
             : 'Enter some code and click "Translate"'}
         </div>
 
-        <div className="mt-6 flex w-full max-w-[1200px] flex-col justify-between sm:flex-row sm:space-x-4">
-          <div className="h-100 flex flex-col justify-center space-y-2 sm:w-2/4">
-            <div className="text-center text-xl font-bold">Input</div>
-
-            <LanguageSelect
-              language={inputLanguage}
-              onChange={(value) => {
-                setInputLanguage(value);
-                setHasTranslated(false);
-                setInputCode('');
-                setOutputCode('');
-              }}
-            />
-
-            {inputLanguage === 'Natural Language' ? (
-              <TextBlock
-                text={inputCode}
-                editable={!loading}
+        <div className="mt-6 flex w-full max-w-[1200px] flex-1 flex-col space-y-6 sm:flex-row sm:space-x-8 sm:space-y-0">
+          <div className="flex flex-1 flex-col rounded-xl bg-[#1F2937] p-5 shadow-lg ring-1 ring-gray-700">
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Input</h2>
+              <LanguageSelect
+                language={inputLanguage}
                 onChange={(value) => {
-                  setInputCode(value);
+                  setInputLanguage(value);
                   setHasTranslated(false);
+                  setInputCode('');
+                  setOutputCode('');
                 }}
+                className="rounded-lg border border-gray-700 bg-[#374151] p-1.5"
               />
-            ) : (
-              <CodeBlock
-                code={inputCode}
-                editable={!loading}
-                onChange={(value) => {
-                  setInputCode(value);
-                  setHasTranslated(false);
-                }}
-              />
-            )}
+            </div>
+            <div className="flex-1 overflow-hidden rounded-lg border border-gray-700 bg-[#0E1117]">
+              {inputLanguage === 'Natural Language' ? (
+                <TextBlock
+                  text={inputCode}
+                  editable={!loading}
+                  onChange={(value) => {
+                    setInputCode(value);
+                    setHasTranslated(false);
+                  }}
+                  className="h-[280px]"
+                />
+              ) : (
+                <CodeBlock
+                  code={inputCode}
+                  editable={!loading}
+                  onChange={(value) => {
+                    setInputCode(value);
+                    setHasTranslated(false);
+                  }}
+                  className="h-[280px]"
+                />
+              )}
+            </div>
           </div>
-          <div className="mt-8 flex h-full flex-col justify-center space-y-2 sm:mt-0 sm:w-2/4">
-            <div className="text-center text-xl font-bold">Output</div>
 
-            <LanguageSelect
-              language={outputLanguage}
-              onChange={(value) => {
-                setOutputLanguage(value);
-                setOutputCode('');
-              }}
-            />
-
-            {outputLanguage === 'Natural Language' ? (
-              <TextBlock text={outputCode} />
-            ) : (
-              <CodeBlock code={outputCode} />
-            )}
+          <div className="flex flex-1 flex-col rounded-xl bg-[#1F2937] p-5 shadow-lg ring-1 ring-gray-700">
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Output</h2>
+              <LanguageSelect
+                language={outputLanguage}
+                onChange={(value) => {
+                  setOutputLanguage(value);
+                  setOutputCode('');
+                }}
+                className="rounded-lg border border-gray-700 bg-[#374151] p-1.5"
+              />
+            </div>
+            <div className="flex-1 overflow-hidden rounded-lg border border-gray-700 bg-[#0E1117]">
+              {outputLanguage === 'Natural Language' ? (
+                <TextBlock 
+                  text={outputCode}
+                  className="h-[280px]"
+                />
+              ) : (
+                <CodeBlock 
+                  code={outputCode}
+                  className="h-[280px]"
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

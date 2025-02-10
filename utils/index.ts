@@ -6,13 +6,13 @@ import {
 } from 'eventsource-parser';
 
 const createPrompt = (
-  inputLanguage: string,
-  outputLanguage: string,
-  inputCode: string,
+  srcLanguage: string,
+  targetLanguage: string,
+  srcCode: string,
 ) => {
-  if (inputLanguage === 'Natural Language') {
+  if (srcLanguage === 'Natural Language') {
     return endent`
-    You are an expert programmer in all programming languages. Translate the natural language to "${outputLanguage}" code. Do not include \`\`\`.
+    You are an expert programmer in all programming languages. Translate the natural language to "${targetLanguage}" code. Do not include \`\`\`.
 
     Example translating from natural language to JavaScript:
 
@@ -25,13 +25,13 @@ const createPrompt = (
     }
 
     Natural language:
-    ${inputCode}
+    ${srcCode}
 
-    ${outputLanguage} code (no \`\`\`):
+    ${targetLanguage} code (no \`\`\`):
     `;
-  } else if (outputLanguage === 'Natural Language') {
+  } else if (targetLanguage === 'Natural Language') {
     return endent`
-      You are an expert programmer in all programming languages. Translate the "${inputLanguage}" code to natural language in plain English that the average adult could understand. Respond as bullet points starting with -.
+      You are an expert programmer in all programming languages. Translate the "${srcLanguage}" code to natural language in plain English that the average adult could understand. Respond as bullet points starting with -.
   
       Example translating from JavaScript to natural language:
   
@@ -43,14 +43,14 @@ const createPrompt = (
       Natural language:
       Print the numbers 0 to 9.
       
-      ${inputLanguage} code:
-      ${inputCode}
+      ${srcLanguage} code:
+      ${srcCode}
 
       Natural language:
      `;
   } else {
     return endent`
-      You are an expert programmer in all programming languages. Translate the "${inputLanguage}" code to "${outputLanguage}" code. Do not include \`\`\`.
+      You are an expert programmer in all programming languages. Translate the "${srcLanguage}" code to "${targetLanguage}" code. Do not include \`\`\`.
   
       Example translating from JavaScript to Python:
   
@@ -63,22 +63,22 @@ const createPrompt = (
       for i in range(10):
         print(i)
       
-      ${inputLanguage} code:
-      ${inputCode}
+      ${srcLanguage} code:
+      ${srcCode}
 
-      ${outputLanguage} code (no \`\`\`):
+      ${targetLanguage} code (no \`\`\`):
      `;
   }
 };
 
 export const OpenAIStream = async (
-  inputLanguage: string,
-  outputLanguage: string,
-  inputCode: string,
+  srcLanguage: string,
+  targetLanguage: string,
+  srcCode: string,
   model: string,
   key: string,
 ) => {
-  const prompt = createPrompt(inputLanguage, outputLanguage, inputCode);
+  const prompt = createPrompt(srcLanguage, targetLanguage, srcCode);
 
   const system = { role: 'system', content: prompt };
 
