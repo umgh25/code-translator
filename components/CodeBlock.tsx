@@ -8,12 +8,14 @@ interface Props {
   code: string;
   editable?: boolean;
   onChange?: (value: string) => void;
+  className?: string;
 }
 
 export const CodeBlock: FC<Props> = ({
   code,
   editable = false,
   onChange = () => {},
+  className = '',
 }) => {
   const [copyText, setCopyText] = useState<string>('Copy');
 
@@ -44,6 +46,7 @@ export const CodeBlock: FC<Props> = ({
         extensions={[StreamLanguage.define(go)]}
         theme={tokyoNight}
         onChange={(value) => onChange(value)}
+        className={className}
       />
     </div>
   );

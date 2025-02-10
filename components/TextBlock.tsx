@@ -2,20 +2,26 @@ interface Props {
   text: string;
   editable?: boolean;
   onChange?: (value: string) => void;
+  className?: string;
 }
 
 export const TextBlock: React.FC<Props> = ({
   text,
   editable = false,
   onChange = () => {},
+  className = '',
 }) => {
   return (
     <textarea
-      className="min-h-[500px] w-full bg-[#1A1B26] p-4 text-[15px] text-neutral-200 focus:outline-none"
-      style={{ resize: 'none' }}
+      className={`w-full h-full resize-none bg-[#0E1117] p-4 text-neutral-200 focus:outline-none ${className}`}
       value={text}
       onChange={(e) => onChange(e.target.value)}
-      disabled={!editable}
+      readOnly={!editable}
+      placeholder={
+        editable
+          ? 'Enter text here...'
+          : 'Output will appear here...'
+      }
     />
   );
 };
