@@ -162,10 +162,10 @@ export default function Home() {
           <ModelSelect 
             model={model} 
             onChange={(value) => setModel(value)}
-            className="w-48 rounded-lg border border-gray-700 bg-[#1F2937] p-2"
+            className="w-48 rounded-md bg-[#1F2937] px-4 py-2 text-neutral-200 border border-gray-700"
           />
           <button
-            className="w-48 rounded-lg bg-violet-500 px-4 py-2 font-medium text-white transition-all hover:bg-violet-600 active:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-48 rounded-md bg-violet-500 px-4 py-2 font-medium text-white transition-all hover:bg-violet-600 active:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => handleTranslate()}
             disabled={loading}
           >
@@ -203,7 +203,7 @@ export default function Home() {
                   setInputCode('');
                   setOutputCode('');
                 }}
-                className="rounded-lg border border-gray-700 bg-[#374151] p-1.5"
+                className="w-48 border border-gray-700"
               />
             </div>
             <div className="flex-1 overflow-hidden rounded-lg border border-gray-700 bg-[#0E1117]">
@@ -240,7 +240,7 @@ export default function Home() {
                   setOutputLanguage(value);
                   setOutputCode('');
                 }}
-                className="rounded-lg border border-gray-700 bg-[#374151] p-1.5"
+                className="w-48 border border-gray-700"
               />
             </div>
             <div className="flex-1 overflow-hidden rounded-lg border border-gray-700 bg-[#0E1117]">

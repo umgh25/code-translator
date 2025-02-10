@@ -3,16 +3,17 @@ import { FC } from 'react';
 interface Props {
   language: string;
   onChange: (language: string) => void;
+  className?: string;
 }
 
-export const LanguageSelect: FC<Props> = ({ language, onChange }) => {
+export const LanguageSelect: FC<Props> = ({ language, onChange, className = '' }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
   };
 
   return (
     <select
-      className="w-full rounded-md bg-[#1F2937] px-4 py-2 text-neutral-200"
+      className={`rounded-md bg-[#1F2937] px-3 py-1 text-sm text-neutral-200 ${className}`}
       value={language}
       onChange={handleChange}
     >
